@@ -1,10 +1,11 @@
 import { useState } from "react";
+import StarRating from "./tasks/StarRating";
 
 function App() {
   return (
-    <>
-      <p className="text-4xl">HIIIIIIIIII</p>
-    </>
+    <div className="flex h-screen justify-center items-center">
+      <StarRating />
+    </div>
   );
 }
 
