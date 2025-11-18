@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 
-export default function StarRating(props) {
-  const limit = props.limit || 5;
-  const [rating, setRating] = useState(props.rating || 2);
-
-  function handleClick(e) {
-    setRating(+e.target.getAttribute("data"));
-  }
+export default function StarRating() {
+  const [rating, setRating] = useState(0); // Final selected rating
+  const [hover, setHover] = useState(0); // Hover preview
 
   return (
-    <div onClick={handleClick} className="flex space-x-1 cursor-pointer">
-      {[...new Array(limit).keys()].map((i) => (
-        <span
-          key={i}
-          data={i + 1}
-          className={`text-2xl ${
-            i < rating ? "text-yellow-500" : "text-gray-400"
-          }`}
-        >
-          {i < rating ? "★" : "☆"}
-        </span>
-      ))}
+    <div className="flex space-x-1">
+      {Array.from({ length: 5 }, (_, i) => {
+        const starValue = i + 1;
+        const isActive = starValue <= (hover || rating);
+
+        return (
+          <span
+            key={i}
+            className={`text-3xl cursor-pointer transition-colors duration-150 ${
+              isActive ? "text-yellow-500" : "text-gray-400"
+            }`}
+            onClick={() => setRating(starValue)}
+            onMouseEnter={() => setHover(starValue)}
+            onMouseLeave={() => setHover(0)}
+          >
+            {isActive ? "★" : "☆"}
+          </span>
+        );
+      })}
     </div>
   );
 }
